@@ -126,8 +126,6 @@ class: middle, center
 </center>
 
 ---
-
----
 ## Testes Estatísticos no R
 
 
@@ -213,6 +211,15 @@ Também temos um blog:
 <img src="img/r4ds.png" width = 40%> 
 </a>
 </center>
+
+
+---
+# Aprendizado
+
+### O objetivo do curso é quebrar inércia da etapa inicial de aprendizado. Assim como um idioma, o jeito de ficar fluente em uma linguagem de programação é praticando no dia a dia. 
+
+<img src="https://media.giphy.com/media/o0vwzuFwCGAFO/giphy.gif" style = "display: block; margin-left: auto; margin-right: auto;">
+
 
 ---
 class: middle, center
@@ -310,18 +317,6 @@ class: middle, center
 ## O ciclo da ciência de dados com o R
 
 <img src="img/ciclo-ciencia-de-dados-pacotes.png" style = "display: block; margin-left: auto; margin-right: auto;">
-
----
-class: middle, center
-
-# Informações importantes
-
----
-# Aprendizado
-
-### O objetivo do curso é ajudar a quebrar inércia da etapa inicial de aprendizado. Assim como um idioma, o único jeito de aprender uma linguagem de programação é praticando.
-
-<img src="https://media.giphy.com/media/o0vwzuFwCGAFO/giphy.gif" style = "display: block; margin-left: auto; margin-right: auto;">
 
 ---
 # Pedindo ajuda
