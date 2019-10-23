@@ -47,6 +47,8 @@ class: middle, center
 - Visualização de dados
 
 - Comunicação
+
+- Testes Estatísticos no R
    
 ---
 ## Introdução ao R
@@ -109,7 +111,8 @@ class: middle, center
 ## Visualização
 
 <center>
-<img src="img/arte_ggplot2.png" width = 80%>
+<img src="img/arte_ggplot2.png" width = 60%>
+<img src="img/examples-of-ggplot-charts.png" width = 45%>
 </center>
 
 ---
@@ -119,8 +122,49 @@ class: middle, center
 - Dashboards estáticos
 
 <center>
-<img src="img/arte_rmarkdown.png" width = 70%>
+<img src="img/case_exemplo.png" width = 70%>
 </center>
+
+---
+
+---
+## Testes Estatísticos no R
+
+
+.pull-left[
+<br>
+- Testes de Proporção 
+
+- Testes de Médias
+
+- Testes Qui-quadrado
+
+- Correlação
+
+]
+
+.pull-right[
+<img src="img/m8_inference_one_proportion_topic_8_3_m8_hypo_testing_for_proportion_2_image5.png">
+]
+
+
+---
+
+## Agenda
+
+- 23/10 – 16h até 20h (4h) - EDP
+
+- 25/10 – 16h até 20h (4h) - EDP
+
+- 28/10 – 16h até 20h (4h) - EDP
+
+- 31/10 – 16h até 20h (4h) – STATION CENTER VILA OLIMPIA
+
+- 05/11– 16h até 21h (5h) – STATION CENTER VILA OLIMPIA
+
+- 07/11 – 16h até 21h (5h) – STATION CENTER VILA OLIMPIA
+
+- (A combinar) (4h)
 
 ---
 

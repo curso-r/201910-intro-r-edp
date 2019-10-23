@@ -8,7 +8,8 @@ library(tidyverse)
 # 2. Podem ser relativos ao diretório de trabalho
 getwd()
 
-# exercício: na linha debaixo, abram aspas e apertem TAB.
+# exercício: na linha debaixo, 1) abram aspas, 2) posicionem o cursor entre as aspas e 3) apertem TAB.
+
 
 # LEITURA DE DADOS --------------------------------------------------------
 # Principais formatos -----------------------------------------------------
@@ -19,27 +20,45 @@ imdb2 <- read_delim("dados/imdb2.csv", delim = ";")
 
 # Excel
 library(readxl)
-imdb_excel <- read_excel("dados/imdb.xlsx", sheet = 1:2)
+# Exercício: use a função read_excel() para ler o arquivo "dados/imdb.xlsx"
+imdb_excel <- 
 
-meu_bd <- read_fwf(file = "dados/imdb.csv", col_positions = c(3, 6, 10, 100))
-names(meu_bd) <- c("coluna 1", "preco", "nome do cliente", "data")
 
 
 # SQL ---------------------------------------------------------------------
-install.packages("RSQLite")
+library(RSQLite)
 conexao <- src_sqlite("dados/imdb.sqlite", create = TRUE)
-# copy_to(conexao, imdb, temporary = FALSE)
 
 imdb_sqlite <- tbl(conexao, "imdb")
 imdb_select <- tbl(conexao, sql("SELECT titulo, ano, diretor FROM imdb"))
+show_query(imdb_select)
+
+imdb_select %>% select(titulo)
 
 # trazer para a memória
-collect(imdb_sqlite)
-collect(imdb_select)
-DBI::dbSendQuery(conexao, "use meuSchema")
-copy_to(conexao, imdb)
+imdb_sqlite_na_maquina_local <- collect(imdb_sqlite)
+imdb_select_na_maquina_local <- collect(imdb_select)
+
+copy_to(conexao, imdb_select)
+imdb_select2 <- tbl(conexao, "imdb_select")
+
 
 # db.rstudio.com
+
+
+
+
+# GRAVANDO DADOS ------------------------------------------------------------
+# funcoes que iniciam com 'write'
+# csv
+write_csv(imdb, path = "dados/imdb.csv")
+
+# Excel
+library(writexl)
+# Exercício: salve a tabela imdb_excel como uma planilha excel no arquivo "dados/imdb.xlsx" usando a função write_xlsx().
+# DICA: é bem parecido com o jeito que se guarda CSV. 
+
+
 
 # Outros formatos ---------------------------------------------------------
 
@@ -56,11 +75,10 @@ library(data.table)
 imdb_dt <- fread("dados/imdb.csv")
 
 
-# GRAVANDO DADOS ------------------------------------------------------------
-# funcoes que iniciam com 'write'
-# csv
-write_csv(imdb, path = "dados/imdb.csv")
 
-# Excel
-library(writexl)
-write_xlsx(imdb_excel, path = "dados/imdb.xlsx")
+# (EXTRA!) Exemplo avançado ----------------------------------------------------------
+library(purrr)
+files <- list.files("dados/por-ano/", full.names = TRUE)
+
+base2 <- map_dfr(files, read_rds)
+

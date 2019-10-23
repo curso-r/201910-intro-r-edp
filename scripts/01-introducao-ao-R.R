@@ -1,3 +1,6 @@
+# Projeto no R (.Rproj): o ícone de cubo azul
+# RStudio e os 4 quadrantes
+
 # Nome dos objetos/variáveis ----------------------------------------------
 
 # Criando objetos/variáveis -----------------------------------------------
@@ -170,14 +173,16 @@ NULL # representa a ausência de informação.
 # Use as funções is.na(), is.nan(), is.infinite() e is.null() 
 # para testar se um objeto é um desses valores.
 
-x <- NA
+x <- c("olá", "", NA, "tchau")
+x == NA
 is.na(x)
-
-0/0 == NaN
-is.nan(0/0)
 
 a <- c(1, 2, 3, NA, 5)
 is.na(a)
+
+zero_dividido_por_zero <- 0/0
+zero_dividido_por_zero == NaN
+is.nan(zero_dividido_por_zero)
 
 # família de funções que começam com is.*()
 is.numeric()
@@ -198,7 +203,8 @@ funcao_com_muitos_argumentos(argumento_1 = 10, argumento_2 = 14, argumento_3 = 3
 
 # Para instalar pacotes
 
-install.packages(c("tidyverse", "rmarkdown", "devtools"))
+install.packages("tidyverse")
+install.packages(c("readxl", "writexl", "rmarkdown", "devtools", "RSQLite", "jsonlite", "purrr"))
 
 # Para carregar pacotes
 
@@ -208,12 +214,9 @@ library(dplyr)
 
 dplyr::select()
 
-
-# Categorização ------------------------------------------------------------
-
-x <- -10:30
-
-x_categorizado <- ifelse(x < 0, "negativo", "positivo")
+# No dia a dia:
+# Instala o pacote APENAS uma vez. (install.packages("pacote"))
+# Carrega o pacote sempre que for precisar nas análises. (library(pacote))
 
 
 # Operações vetoriais  -----------------------------------------------------
@@ -267,3 +270,10 @@ mtcars$mpg[mtcars$wt >= 3]
 # 2) calcule a soma de maior_que_300 (utilize a função sum()).
 
 
+
+
+# Categorização ------------------------------------------------------------
+
+x <- -10:30
+
+x_categorizado <- ifelse(x < 0, "negativo", "positivo")
