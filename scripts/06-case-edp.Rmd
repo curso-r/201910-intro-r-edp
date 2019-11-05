@@ -15,12 +15,14 @@ library(knitr)
 theme_set(theme_minimal(12))
 
 # Exercício 1: carregar base BD.xlsx usando a função read_excel()
-bd <- 
+bd <- read_excel("../dados/BD.xlsx")
 
 bd_arrumado <- bd %>%
   mutate(
     data = paste(Ano, Mês, Dia, sep = "-") %>% as.Date()
   )
+
+glimpse(bd_arrumado)
 ```
 
 Chuvas
@@ -33,6 +35,10 @@ primeira fileira
 
 ```{r}
 valor <- bd$ChuvaS %>% mean() %>% round(2)
+
+
+
+
 valueBox(value = valor)
 ```
 
@@ -43,16 +49,22 @@ valor <- bd$ChuvaSE %>% mean() %>% round(2)
 valueBox(value = valor)
 ```
 
-### Precipitação Último Mês (S)
+### Nível Último Mês (S)
 
 ```{r}
-bd_aux <- bd_arrumado %>%
+ultimo_mes <- bd_arrumado %>%
   mutate(
-    ano_mes = floor_date(data, "months")
+    ano_mes = floor_date(data, "months"),
+    mes = month(data, label = TRUE)
   ) %>%
-  filter(ano_mes == max(ano_mes))
+  filter(
+    Ano == max(Ano)
+  ) %>%
+  filter(
+    Mês == max(Mês)
+  )
 
-valor <- bd_aux$ChuvaS %>% mean() %>% round(2)
+valor <- ultimo_mes$ChuvaS %>% mean() %>% round(2)
 valueBox(value = valor)
 ```
 
@@ -84,6 +96,10 @@ plotly::ggplotly(p1)
 ```
 
 ### Sumário
+```{r}
+bd_arrumado %>%
+  gather(regiao, precipitacao, starts_with("Chuva"))  %>% View
+```
 
 ```{r}
 bd_arrumado %>%
@@ -112,8 +128,6 @@ segunda fileira
 p3 <- bd_arrumado %>%
   gather(regiao, precipitacao, starts_with("Chuva")) %>%
   ggplot(aes(x = data, y = precipitacao, colour = regiao)) +
-  # geom_smooth(span = 0.3) +
-  # geom_boxplot(aes(group = paste(regiao, floor_date(data, "months"))), alpha = 0.3) +
   geom_line() +
   scale_x_date(breaks = "2 months", date_labels = "%y-%b") +
   theme_minimal(12) +
@@ -133,7 +147,7 @@ primeira fileira
 ### ENA Média (S)
 
 ```{r}
-valor <- 0
+valor <- bd_arrumado$ENASperc %>% mean() %>% round(2)
 valueBox(value = valor)
 ```
 
@@ -141,18 +155,28 @@ valueBox(value = valor)
 
 ```{r}
 
+valor <- bd_arrumado$ENASEperc %>% mean() %>% round(2)
+valueBox(value = valor)
 ```
 
 ### ENA Último Mês (S)
 
 ```{r}
+ultimo_mes <- bd_arrumado %>%
+  filter(
+    Ano == max(Ano)
+  ) %>%
+  filter(
+    `Mês` == max(`Mês`)
+  )
 
+valueBox(value = ultimo_mes$ENASperc %>% mean() %>% round(2))
 ```
 
 ### ENA Último Mês (SE)
 
 ```{r}
-
+valueBox(value = ultimo_mes$ENASEperc %>% mean() %>% round(2))
 ```
 
 segunda fileira
@@ -161,13 +185,25 @@ segunda fileira
 ### ENA SE vs S
 
 ```{r}
+p1 <- bd_arrumado %>%
+  ggplot(aes(x = ENASEperc, y = ENASperc)) +
+  geom_point() 
 
+plotly::ggplotly(p1)
 ```
 
 ### Sumário
 
 ```{r}
-
+bd_arrumado %>%
+  gather(regiao, enaperc, ENASEperc, ENASperc) %>%
+  group_by(Ano, Mês, regiao) %>%
+  summarise(
+    dias = n(),
+    `Média` = mean(enaperc) %>% round(2),
+    `Desv.P` = sd(enaperc) %>% round(2)
+  ) %>%
+  kable()
 ```
 
 
@@ -176,13 +212,29 @@ terceira fileira
 
 ### ENA no tempo
 
-```{r, fig.width=20}
+```{r}
+p2 <- bd_arrumado %>%
+  gather(regiao, enaperc, ENASEperc, ENASperc) %>%
+  ggplot(aes(x = data, y = enaperc, colour = regiao)) +
+  geom_line() 
 
+  plotly::ggplotly(p2)
 ```
 
 
 Merc+1
 =========================================================================================
+
+--------------------------------
+
+### Histograma de Merc+1
+
+```{r}
+bd_arrumado %>%
+  ggplot() +
+  geom_histogram(aes(x = `Merc+1`), color = "white")
+```
+
 
 - Instruções:
 - 1) Crie uma fileira única
@@ -197,7 +249,7 @@ Dados
 fileira unica {.tabset}
 ------------------------------------------------------
 
-### Usando kable
+### Usando kable 
 
 ```{r}
 bd_arrumado %>% kable()
@@ -207,5 +259,27 @@ bd_arrumado %>% kable()
 
 ```{r}
 library(DT)
-bd_arrumado %>% datatable()
+bd_arrumado %>% datatable(filter = "bottom")
 ```
+
+
+
+
+
+Anotações {data-orientation=columns}
+============================================
+
+<h4>Próximos passos</h4>
+
+1. reparar que dá para colocar código HMTL no texto.
+2. revisitar os graficos e colocar ggplotly() onde lhe convier.
+3. solicitar ao professor para falar sobre graficos waterfall.
+
+<h4>Referências</h4>
+
+- [rmarkdown](https://rmarkdown.rstudio.com/lesson-1.html)
+- [rmarkdown book](https://bookdown.org/yihui/rmarkdown/)
+- [flexdashboard](https://rmarkdown.rstudio.com/flexdashboard/using.html)
+- [kable](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html)
+- [bookdown](https://bookdown.org/yihui/bookdown/get-started.html)
+

@@ -2,7 +2,7 @@
 ## Dicas rápidas! -----------------------------
 
 # qual a função que faz/constrói vetores?
-
+c(1, 5, 10)
 
 
 # qual a diferença entre as duas partes abaixo?
@@ -23,6 +23,7 @@ sum(x)
 
 # parte 2
 sum(c(1,2,3,4,5))
+sum(1:5)
 
 
 
@@ -45,7 +46,7 @@ x <- 1:5
 sin(x)
 
 # parte 2
-x %>% sin
+x %>% sin()
 
 
 
@@ -68,19 +69,20 @@ sin(as.numeric(c("1","2","3","4","5")))
 # descubra quais pastas estão na sua 
 # área de trabalho sem sair daqui!
 # DICA: **abra e feche aspas**
-
+read_rds("dados/imdb.rds")
 
 
 # Qual a diferença entre apertar CTRL+ENTER 
 # sem selecionar nada VERSUS selecionando
 # uma linha inteira?
-
+x = 1
 
 
 # Utilizando o tab, o nome do pacote e o '::', 
 # faça o rstudio listar todas as funções do
 # pacote stringr.
 
+stringr::
 
 
 # o x é um vetor pequeno, então qual seria 

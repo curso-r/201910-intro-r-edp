@@ -3,7 +3,7 @@ title: "IMDB"
 output: 
   flexdashboard::flex_dashboard:
     orientation: rows
-    theme: journal
+    theme: lumen
 editor_options: 
   chunk_output_type: console
 ---
@@ -31,19 +31,19 @@ Row
 ### Filmes
 
 ```{r}
-
+valueBox(nrow(imdb))
 ```
 
 ### # Diretores
 
 ```{r}
-
+valueBox(n_distinct(imdb$diretor))
 ```
 
 ### # Atores
 
 ```{r}
-
+valueBox(10)
 ```
 
 Row
@@ -70,7 +70,7 @@ Mas em geral filmes com notas bem altas lucram mais do que os outros.
 
 > Filmes com maior orçamento têm maior possibilidade de prejuizo. Essas duas variáveis não são fortemente correlacionadas.
 
-Gêneros
+Gêneros {data-orientation=columns}
 ==============================================================
 
 

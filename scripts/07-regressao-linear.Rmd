@@ -1,0 +1,128 @@
+---
+title: "Regressão Linear"
+author: "Athos"
+date: "02/11/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(broom)
+library(patchwork)
+```
+
+## O que é e quando usar
+
+$$
+y = \beta_0 + \beta_1x
+$$
+
+```{r}
+grafico_da_reta_escolhida_a_mao <- ggplot(cars) + 
+  geom_point(aes(x = speed, y = dist), size = 4) + 
+  geom_abline(
+    intercept = 12, 
+    slope = 3, 
+    size = 2,
+    colour = "royalblue"
+  )
+
+grafico_da_reta_escolhida_a_mao
+```
+
+## A melhor reta
+
+```{r}
+# ajuste de uma regressão linear simples
+melhor_reta <- lm(dist ~ speed, data = cars)
+
+grafico_da_melhor_reta <- grafico_da_reta_escolhida_a_mao +
+  geom_abline(
+    intercept = melhor_reta$coefficients[1], 
+    slope =     melhor_reta$coefficients[2], 
+    size = 2,
+    colour = "salmon"
+  )
+grafico_da_melhor_reta
+```
+
+## Erros e resíduos
+
+```{r}
+cars_com_predicoes <- melhor_reta %>% 
+  augment() %>%
+  rename(pred_melhor_reta = .fitted) %>%
+  mutate(
+    pred_reta_a_mao = 12 + 3 * speed
+  )
+```
+
+
+```{r, fig.width=10, fig.asp= 0.5}
+grafico_residuos_melhor_reta <- cars_com_predicoes %>%
+  ggplot(aes(x = speed, y = dist)) +
+  geom_point(size = 2) +
+  geom_abline(
+    intercept = melhor_reta$coefficients[1], 
+    slope =     melhor_reta$coefficients[2], 
+    size = 1,
+    colour = "salmon"
+  ) +
+  geom_segment(aes(xend = speed, yend = pred_melhor_reta), colour = "blue", size = 1) +
+  labs(
+    title = "Resíduos da Melhor Reta",
+    subtitle = "Os segmentos azuis quantificam o quanto o modelo errou."
+  )
+
+grafico_residuos_reta_a_mao <- cars_com_predicoes %>%
+  ggplot(aes(x = speed, y = dist)) +
+  geom_point(size = 2) +
+  geom_abline(
+    intercept = 12, 
+    slope =     3, 
+    size = 1,
+    colour = "orange"
+  ) +
+  geom_segment(aes(xend = speed, yend = pred_reta_a_mao), colour = "blue", size = 1) +
+  labs(
+    title = "Resíduos da Reta Escolhida a Mão",
+    subtitle = " "
+  )
+
+grafico_residuos_melhor_reta + grafico_residuos_reta_a_mao
+```
+
+
+```{r}
+cars_com_predicoes %>%
+  ggplot(aes(x = speed, y = dist)) +
+  geom_point(size = 2) +
+  geom_abline(
+    intercept = melhor_reta$coefficients[1], 
+    slope =     melhor_reta$coefficients[2], 
+    size = 1,
+    colour = "salmon"
+  ) +
+  geom_segment(aes(xend = speed, yend = pred_melhor_reta), colour = "blue", size = 1) +
+  labs(
+    title = "Resíduos da Melhor Reta",
+    subtitle = "Os segmentos azuis quantificam o quanto o modelo errou."
+  )
+```
+
+**Resíduo**: 
+
+Se tirarmos a média de quanto cada segmento azul errou, teremos uma medida do nosso erro.
+A fórmula de baixo é o Erro Quadrático Médio.
+
+$$
+EQM = \frac{1}{N}\sum(y_i - \hat{y_i})^2
+$$
+
+```{r}
+# Exercício: calcule o EQM da Melhor reta.
+
+```
+
+

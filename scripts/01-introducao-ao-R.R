@@ -6,10 +6,12 @@
 # Criando objetos/variáveis -----------------------------------------------
 
 obj <- 1
+obj = 1
 obj
+meus_dados <- mtcars
 
 # também dizemos 'guardando as saídas'
-y <- seq(1, 10, length.out = 5)
+y = seq(1, 10, length.out = 5)
 y
 
 # ATALHO para rodar o código: CTRL + ENTER
@@ -40,17 +42,28 @@ c(1, 4, 3, 10)
 vetor <- c(4, 8, 15, 16, 23, 42)
 
 vetor[1]
-vetor[c(1, 3)]
 vetor[-5]
+
+vetor[ c(1, 3)]
 vetor[-c(1, 3)]
 
 
+
+vetor
+vetor[ c(1, 3)]
+vetor[-c(1, 3)]
+
+
+
+
 # exercícios:
-# 1) crie um vetor de 0 a 5 e guarde num objeto chamado 'zero_a_cinco'
+# 1) crie um vetor de 0 a 5 e guarde num objeto 
+# chamado 'zero_a_cinco'
 # dica: usar o operador : (1:10)
+zero_a_cinco <- 0:5
 
 # 2) extraia apenas os números 0 e 5 desse vetor
-
+zero_a_cinco[c(1, 6)]
 
 
 # Tipos -------------------------------------------------------------------
@@ -63,9 +76,11 @@ class(a)
 # Caracteres (character, strings)
 
 obj <- "a"
-obj2 <- "masculino"
-
-class(obj)
+obj <- '1'
+obj2 <- c("masculino", "a")
+letters
+LETTERS[-1]
+class(obj2)
 
 # lógicos (logical, booleanos)
 
@@ -83,10 +98,12 @@ class(mtcars)
 mtcars$mpg
 
 # exercício 1: na linha debaixo, coloque o $ e aperte TAB
+mtcars$disp
 
 # exercício 2: selecione a coluna 'cyl' usando o $ e 
 # depois extraia os valores de 4 a 8
-
+mtcars[c(4:8), ]
+mtcars$cyl[c(4, 5, 6, 7, 8)]
 
 # Funções -----------------------------------------------------------------
 
@@ -104,11 +121,14 @@ mean(seq(1, 10, 2))
 y <- seq(1, 10, length.out = 5)
 y
 
+mean(seq(1, 10, length.out = 5) + 5)
+
 # exercícios:
 # 1) use a funcao 'sum' para somar os valores de 1 a 100
+sum(1:100)
 
 # 2) agora some os valores da coluna mpg do banco de dados mtcars (dica: use o $)
-
+sum(mtcars$mpg)
 
 # Criando funções
 
@@ -135,23 +155,33 @@ minha_soma2 <- function(x, y) {
 
 minha_soma2(1, 2)
 
-
 # Comparações lógicas ------------------------------------------------------
 
 1 > 0
 2 < 1
 3 == 3
 3 != 1
-5 %in% c(2, 4, 5)
+6 %in% c(2, 4, 5)
+estados_importantes <- c("SP", "SP", "ES", "RS")
+!estados_importantes %in% c("SP", "RJ", "ES")
 
 # e também
 !5 %in% c(2, 4, 5)
-1 >= 0
+1 >= 1
 2 <= 1
 
 # exercício: crie um vetor de números e veja o que acontece se você fizer
 # uma comparação lógica com ele.
+vetor <- c(2, 3, 5) 
+vetor %in% c(1,2,3)
 
+x <- "conv"
+energia_da_proposta <- c("conv", 5, 1)
+x %in% energia_da_proposta
+energia_da_proposta %in% x
+vetor > 3
+idade <- c(40, 20, 30)
+idade > 30
 
 # Valores especiais -------------------------------------------------------
 
@@ -195,7 +225,12 @@ is.null()
 
 # Identação ---------------------------------------------------------------
 
-funcao_com_muitos_argumentos(argumento_1 = 10, argumento_2 = 14, argumento_3 = 30, argumento_4 = 11)
+funcao_com_muitos_argumentos(
+  argumento_1 = 10, 
+  argumento_2 = 14, 
+  argumento_3 = 30, 
+  argumento_4 = 11
+)
 
 # ATALHO: CTRL+I
 
@@ -204,6 +239,7 @@ funcao_com_muitos_argumentos(argumento_1 = 10, argumento_2 = 14, argumento_3 = 3
 # Para instalar pacotes
 
 install.packages("tidyverse")
+install.packages("dplyr")
 install.packages(c("readxl", "writexl", "rmarkdown", "devtools", "RSQLite", "jsonlite", "purrr"))
 
 # Para carregar pacotes
@@ -212,7 +248,7 @@ library(dplyr)
 
 # Também é possível acessar as funções usando ::
 
-dplyr::select()
+dplyr::tbl_vars()
 
 # No dia a dia:
 # Instala o pacote APENAS uma vez. (install.packages("pacote"))
@@ -228,12 +264,15 @@ a + 1
 a ^ 2
 b * 5
 b / b
+a * a
 
 a + b
 b * a
 
 # exercícios:
-# 1) crie um vetor 'mpg2' que receba a coluna 'mpg' do mtcars, mas com seus valores ao quadrado
+# 1) crie um vetor 'mpg2' que receba a coluna 'mpg' 
+# do mtcars, mas com seus valores ao quadrado
+mpg2 <- mtcars$mpg^2
 
 
 # Coerção ------------------------------------------------------------------
@@ -245,7 +284,9 @@ class(c(TRUE, TRUE, FALSE))
 c(1, 2, 3, "a")
 c(TRUE, FALSE, "a")
 c(1L, "a", "2")
-c(TRUE, FALSE, 1, 100)
+c(TRUE, FALSE, 1, 0)
+
+c("1,2", "1,6", "14,5")
 
 # logico < inteiro < numerico < caracter
 
@@ -255,7 +296,9 @@ x <- 1:10
 
 x < 4
 as.numeric(x < 4)
-sum(x < 4)
+sum(x < 4) # soma de vetores lógicos é a mesma coisa que contagem.
+mean(x < 4) # média de vetores lógicos é a mesma coisa que proporção.
+
 x[x < 4]
 sum(x[x < 4])
 
@@ -266,9 +309,10 @@ mtcars$mpg[mtcars$wt >= 3]
 
 # exercícios:
 # 1) crie um vetor lógico 'maior_que_300' que indique se o vetor mpg2 é maior que 300.
+maior_que_300 <- mpg2 > 300
 
 # 2) calcule a soma de maior_que_300 (utilize a função sum()).
-
+sum(maior_que_300)
 
 
 
@@ -276,4 +320,11 @@ mtcars$mpg[mtcars$wt >= 3]
 
 x <- -10:30
 
-x_categorizado <- ifelse(x < 0, "negativo", "positivo")
+x_categorizado <- ifelse(x < 0, "negativo", ifelse(x < 10, "menor que 10", "menor que 10"))
+
+x_categorizado <- case_when(
+  x < 0 & y == 3 | idade > 40 ~ "negativo",
+  x == 0 ~ "zero",
+  x < 10 ~ log(x + y)/media(idade),
+  TRUE ~ "GRUPO GENERICO"
+)

@@ -9,21 +9,23 @@ library(tidyverse)
 getwd()
 
 # exercício: na linha debaixo, 1) abram aspas, 2) posicionem o cursor entre as aspas e 3) apertem TAB.
-
+"dados/imdb.sav"
 
 # LEITURA DE DADOS --------------------------------------------------------
 # Principais formatos -----------------------------------------------------
 
 # Arquivos de texto
 imdb <- read_csv(file = "dados/imdb.csv")
-imdb2 <- read_delim("dados/imdb2.csv", delim = ";")
+imdb2 <- read.csv2("dados/imdb2.csv", )
+
+View(imdb2)
 
 # Excel
 library(readxl)
+install.packages("readxl")
 # Exercício: use a função read_excel() para ler o arquivo "dados/imdb.xlsx"
-imdb_excel <- 
-
-
+imdb_excel <- read_excel("dados/imdb.xlsx", sheet = "minha aba de interesse", n_max = 1, )
+View(imdb_excel)
 
 # SQL ---------------------------------------------------------------------
 library(RSQLite)
@@ -51,12 +53,13 @@ imdb_select2 <- tbl(conexao, "imdb_select")
 # GRAVANDO DADOS ------------------------------------------------------------
 # funcoes que iniciam com 'write'
 # csv
-write_csv(imdb, path = "dados/imdb.csv")
+write_csv(imdb, path = "dados/imdb_novo.csv")
 
 # Excel
 library(writexl)
 # Exercício: salve a tabela imdb_excel como uma planilha excel no arquivo "dados/imdb.xlsx" usando a função write_xlsx().
 # DICA: é bem parecido com o jeito que se guarda CSV. 
+write_xlsx(imdb, path = "dados/imdb_novo.xlsx")
 
 
 
@@ -79,6 +82,5 @@ imdb_dt <- fread("dados/imdb.csv")
 # (EXTRA!) Exemplo avançado ----------------------------------------------------------
 library(purrr)
 files <- list.files("dados/por-ano/", full.names = TRUE)
-
-base2 <- map_dfr(files, read_rds)
-
+base2 <- map_dfr(files, read_excel, sheet = "minha aba de interesse")
+View(base2)
